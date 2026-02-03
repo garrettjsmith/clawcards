@@ -1,59 +1,30 @@
 'use client'
 
 import { useState } from 'react'
-import { cards, getNewDrops } from '@/data/cards'
+import { cards, getNewDrops, seriesInfo, Card } from '@/data/cards'
 import { CardItem } from '@/components/CardItem'
-import { cn, formatPrice, getRarityColor, getAvailableEditions } from '@/lib/utils'
+import { cn, formatPrice, getRarityColor, getAvailableEditions, getParallelLabel } from '@/lib/utils'
 
-// Simulated upcoming drops
-const upcomingDrops = [
-  {
-    id: 'plasma-phoenix',
-    name: 'Plasma Phoenix',
-    description: 'Rising from the digital ashes, the Phoenix represents rebirth in the MoltBot world.',
-    rarity: 'legendary',
-    type: 'character',
-    priceInCents: 19999,
-    totalEditions: 50,
-    releaseDate: '2024-03-01',
-    creator: 'OpenClaw Studios',
-  },
-  {
-    id: 'quantum-core',
-    name: 'Quantum Core',
-    description: 'The heart of all MoltBot technology. Harnesses infinite parallel possibilities.',
-    rarity: 'epic',
-    type: 'item',
-    priceInCents: 7999,
-    totalEditions: 200,
-    releaseDate: '2024-02-25',
-    creator: 'OpenClaw Studios',
-  },
-  {
-    id: 'genesis-block',
-    name: 'Genesis Block',
-    description: 'The moment it all began. Own a piece of MoltBot history.',
-    rarity: 'epic',
-    type: 'moment',
-    priceInCents: 5999,
-    totalEditions: 300,
-    releaseDate: '2024-02-20',
-    creator: 'Community Creator',
-  },
-]
+// Get the mythic/legendary cards as featured drops
+const featuredDrops = cards.filter(c => c.rarity === 'mythic' || (c.rarity === 'legendary' && c.featured))
 
-// Past drops (cards that sold out or completed)
+// Get all new drops sorted by rarity
+const currentDrops = getNewDrops().sort((a, b) => {
+  const rarityOrder = { mythic: 6, legendary: 5, epic: 4, rare: 3, uncommon: 2, common: 1 }
+  return (rarityOrder[b.rarity] || 0) - (rarityOrder[a.rarity] || 0)
+})
+
+// Past drops (cards that are mostly sold out)
 const pastDrops = cards.filter(c => !c.isNewDrop && c.editionsSold > c.totalEditions * 0.8)
 
 export default function DropsPage() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
-  const currentDrops = getNewDrops()
-  const featuredDrop = cards.find(c => c.rarity === 'legendary')
+
+  const primaryFeatured = featuredDrops[0] // Genesis Prime - the 1/1
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
-    // In production, this would call an API
     setSubscribed(true)
     setEmail('')
   }
@@ -70,35 +41,50 @@ export default function DropsPage() {
             Drops
           </h1>
           <p className="text-text-muted mt-4 text-lg max-w-2xl mx-auto">
-            New cards are released regularly. Subscribe to get notified about upcoming drops
-            so you never miss a legendary release.
+            Premium ClawCards released regularly. From common collectibles to mythic 1/1s.
+            Subscribe to never miss a legendary drop.
           </p>
         </div>
 
-        {/* Featured Drop */}
-        {featuredDrop && (
+        {/* Ultimate Chase Card - Genesis Prime */}
+        {primaryFeatured && (
           <section className="mb-20">
             <div className="text-center mb-8">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rarity-legendary/10 border border-rarity-legendary/20">
-                <span className="w-2 h-2 bg-rarity-legendary rounded-full animate-pulse" />
-                <span className="text-rarity-legendary text-sm font-medium">Live Now</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rarity-mythic/20 to-purple-500/10 border border-rarity-mythic/30">
+                <span className="w-2 h-2 bg-rarity-mythic rounded-full animate-pulse" />
+                <span className="text-rarity-mythic text-sm font-medium">ULTIMATE CHASE CARD</span>
               </span>
             </div>
 
-            <div className="card-frame card-legendary p-6 md:p-10 max-w-4xl mx-auto">
+            <div className="card-frame card-mythic p-6 md:p-10 max-w-4xl mx-auto">
               <div className="holographic-overlay rounded-xl" />
               <div className="relative grid md:grid-cols-2 gap-8 items-center">
                 {/* Card Preview */}
-                <div className="relative aspect-[3/4] rounded-lg overflow-hidden bg-gradient-to-br from-rarity-legendary/30 to-rarity-legendary/5 flex items-center justify-center">
-                  <span className="text-9xl opacity-30">🤖</span>
+                <div className="relative aspect-[3/4] rounded-lg overflow-hidden bg-gradient-to-br from-rarity-mythic/30 via-purple-500/20 to-cyan-500/10 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
+                  <span className="text-9xl opacity-40">🏆</span>
+
+                  {/* Series Number */}
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-rarity-legendary/20 text-rarity-legendary text-xs font-semibold uppercase tracking-wider rounded">
-                      Legendary
+                    <span className="edition-badge text-rarity-mythic font-mono">
+                      {primaryFeatured.seriesNumber}
                     </span>
                   </div>
+
+                  {/* Rarity Badges */}
+                  <div className="absolute top-4 right-4 flex flex-col gap-1 items-end">
+                    <span className="px-3 py-1 bg-gradient-to-r from-rarity-mythic/30 to-purple-500/20 text-rarity-mythic text-xs font-semibold uppercase tracking-wider rounded">
+                      MYTHIC
+                    </span>
+                    <span className="px-3 py-1 bg-white/20 text-white text-xs font-semibold uppercase tracking-wider rounded">
+                      {getParallelLabel(primaryFeatured.parallel)}
+                    </span>
+                  </div>
+
+                  {/* Edition */}
                   <div className="absolute bottom-4 right-4">
-                    <span className="edition-badge text-rarity-legendary">
-                      {getAvailableEditions(featuredDrop)} LEFT
+                    <span className="edition-badge text-white text-lg font-bold">
+                      1 of 1
                     </span>
                   </div>
                 </div>
@@ -107,39 +93,75 @@ export default function DropsPage() {
                 <div className="space-y-5">
                   <div>
                     <h2 className="font-display text-3xl font-bold text-text-primary">
-                      {featuredDrop.name}
+                      {primaryFeatured.name}
                     </h2>
-                    <p className="text-text-dim text-sm uppercase tracking-wider mt-1">
-                      {featuredDrop.type} Card by {featuredDrop.creator}
+                    {primaryFeatured.subtitle && (
+                      <p className="text-rarity-mythic text-lg italic mt-1">
+                        {primaryFeatured.subtitle}
+                      </p>
+                    )}
+                    <p className="text-text-dim text-sm uppercase tracking-wider mt-2">
+                      {primaryFeatured.type} • {seriesInfo[primaryFeatured.series]?.name}
                     </p>
                   </div>
 
                   <p className="text-text-muted">
-                    {featuredDrop.description}
+                    {primaryFeatured.description}
                   </p>
+
+                  {/* Attributes */}
+                  {primaryFeatured.attributes && (
+                    <div className="grid grid-cols-4 gap-3">
+                      <div className="p-3 rounded-lg bg-white/5 text-center">
+                        <p className="text-accent-coral font-mono font-bold text-lg">{primaryFeatured.attributes.power}</p>
+                        <p className="text-text-dim text-xs">POWER</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/5 text-center">
+                        <p className="text-accent-cyan font-mono font-bold text-lg">{primaryFeatured.attributes.wisdom}</p>
+                        <p className="text-text-dim text-xs">WISDOM</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/5 text-center">
+                        <p className="text-rarity-epic font-mono font-bold text-lg">{primaryFeatured.attributes.influence}</p>
+                        <p className="text-text-dim text-xs">INFLUENCE</p>
+                      </div>
+                      <div className="p-3 rounded-lg bg-white/5 text-center">
+                        <p className="text-rarity-mythic font-mono font-bold text-lg">{primaryFeatured.attributes.rarity_score}</p>
+                        <p className="text-text-dim text-xs">SCORE</p>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 rounded-lg bg-white/5">
                       <p className="text-text-dim text-xs uppercase tracking-wider">Price</p>
-                      <p className="font-display text-2xl font-bold text-text-primary">
-                        {formatPrice(featuredDrop.priceInCents)}
+                      <p className="font-display text-2xl font-bold text-gradient">
+                        {formatPrice(primaryFeatured.priceInCents)}
                       </p>
                     </div>
                     <div className="p-4 rounded-lg bg-white/5">
-                      <p className="text-text-dim text-xs uppercase tracking-wider">Editions</p>
+                      <p className="text-text-dim text-xs uppercase tracking-wider">Edition</p>
                       <p className="font-display text-2xl font-bold text-text-primary">
-                        {featuredDrop.editionsSold}/{featuredDrop.totalEditions}
+                        1/1
                       </p>
                     </div>
                   </div>
 
                   <form action="/api/checkout" method="POST">
-                    <input type="hidden" name="cardId" value={featuredDrop.id} />
+                    <input type="hidden" name="cardId" value={primaryFeatured.id} />
                     <button
                       type="submit"
-                      className="btn-primary w-full text-lg py-4"
+                      disabled={getAvailableEditions(primaryFeatured) === 0}
+                      className={cn(
+                        "w-full text-lg py-4 rounded-lg font-display font-bold transition-all",
+                        getAvailableEditions(primaryFeatured) === 0
+                          ? "bg-white/10 text-text-dim cursor-not-allowed"
+                          : "bg-gradient-to-r from-rarity-mythic to-purple-600 hover:from-rarity-mythic/90 hover:to-purple-500 text-white shadow-lg shadow-rarity-mythic/25"
+                      )}
                     >
-                      Purchase for {formatPrice(featuredDrop.priceInCents)}
+                      {getAvailableEditions(primaryFeatured) === 0
+                        ? 'Sold Out'
+                        : `Purchase for ${formatPrice(primaryFeatured.priceInCents)}`
+                      }
                     </button>
                   </form>
                 </div>
@@ -148,83 +170,33 @@ export default function DropsPage() {
           </section>
         )}
 
-        {/* Coming Soon */}
+        {/* Featured Legendary Drops */}
+        {featuredDrops.length > 1 && (
+          <section className="mb-20">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8">
+              Featured Drops
+            </h2>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredDrops.slice(1, 4).map((card) => (
+                <CardItem key={card.id} card={card} size="lg" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* All Current Drops */}
         <section className="mb-20">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-8">
-            Coming Soon
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-text-primary mb-2">
+            Current Drops
           </h2>
+          <p className="text-text-muted mb-8">
+            {currentDrops.length} cards available in this release
+          </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingDrops.map((drop) => (
-              <div
-                key={drop.id}
-                className={cn(
-                  'card-frame p-5',
-                  drop.rarity === 'legendary' && 'card-legendary',
-                  drop.rarity === 'epic' && 'card-epic',
-                )}
-              >
-                {/* Preview */}
-                <div className={cn(
-                  'relative aspect-video rounded-lg overflow-hidden mb-4 flex items-center justify-center',
-                  drop.rarity === 'legendary' && 'bg-gradient-to-br from-rarity-legendary/20 to-rarity-legendary/5',
-                  drop.rarity === 'epic' && 'bg-gradient-to-br from-rarity-epic/20 to-rarity-epic/5',
-                )}>
-                  <span className="text-5xl opacity-30">
-                    {drop.type === 'character' && '🤖'}
-                    {drop.type === 'moment' && '⚡'}
-                    {drop.type === 'item' && '🔧'}
-                  </span>
-                  <div className="absolute top-3 left-3">
-                    <span className={cn(
-                      'px-2 py-1 text-xs font-semibold uppercase tracking-wider rounded',
-                      getRarityColor(drop.rarity),
-                      drop.rarity === 'legendary' && 'bg-rarity-legendary/20',
-                      drop.rarity === 'epic' && 'bg-rarity-epic/20',
-                    )}>
-                      {drop.rarity}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="space-y-3">
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-text-primary">
-                      {drop.name}
-                    </h3>
-                    <p className="text-text-dim text-xs uppercase tracking-wider">
-                      {drop.type}
-                    </p>
-                  </div>
-
-                  <p className="text-text-muted text-sm line-clamp-2">
-                    {drop.description}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                    <div>
-                      <p className="font-display font-bold text-text-primary">
-                        {formatPrice(drop.priceInCents)}
-                      </p>
-                      <p className="text-text-dim text-xs">
-                        {drop.totalEditions} editions
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-accent-cyan text-sm font-medium">
-                        Coming Soon
-                      </p>
-                      <p className="text-text-dim text-xs">
-                        {new Date(drop.releaseDate).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {currentDrops.map((card) => (
+              <CardItem key={card.id} card={card} />
             ))}
           </div>
         </section>
@@ -237,7 +209,7 @@ export default function DropsPage() {
               Never Miss a Drop
             </h2>
             <p className="text-text-muted mb-6">
-              Get notified when new cards are released. Be first in line for legendary drops.
+              Get notified when new cards are released. Be first in line for legendary and mythic drops.
             </p>
 
             {subscribed ? (

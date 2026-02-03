@@ -28,6 +28,8 @@ const config: Config = {
         },
         // Rarity colors
         rarity: {
+          mythic: '#ff1a75',
+          'mythic-glow': '#ff4d94',
           legendary: '#f59e0b',
           'legendary-glow': '#fbbf24',
           epic: '#a855f7',

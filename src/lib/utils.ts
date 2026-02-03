@@ -19,6 +19,7 @@ export function formatEdition(current: number, total: number): string {
 
 export function getRarityClass(rarity: string): string {
   const classes: Record<string, string> = {
+    mythic: 'card-mythic',
     legendary: 'card-legendary',
     epic: 'card-epic',
     rare: 'card-rare',
@@ -30,6 +31,7 @@ export function getRarityClass(rarity: string): string {
 
 export function getRarityColor(rarity: string): string {
   const colors: Record<string, string> = {
+    mythic: 'text-rarity-mythic',
     legendary: 'text-rarity-legendary',
     epic: 'text-rarity-epic',
     rare: 'text-rarity-rare',
@@ -41,6 +43,7 @@ export function getRarityColor(rarity: string): string {
 
 export function getRarityBgColor(rarity: string): string {
   const colors: Record<string, string> = {
+    mythic: 'bg-rarity-mythic/20',
     legendary: 'bg-rarity-legendary/20',
     epic: 'bg-rarity-epic/20',
     rare: 'bg-rarity-rare/20',
@@ -48,6 +51,30 @@ export function getRarityBgColor(rarity: string): string {
     common: 'bg-rarity-common/20',
   }
   return colors[rarity.toLowerCase()] || colors.common
+}
+
+export function getParallelClass(parallel: string): string {
+  const classes: Record<string, string> = {
+    platinum: 'parallel-platinum',
+    obsidian: 'parallel-obsidian',
+    gold: 'parallel-gold',
+    chrome: 'parallel-chrome',
+    holographic: 'parallel-holographic',
+    base: '',
+  }
+  return classes[parallel.toLowerCase()] || ''
+}
+
+export function getParallelLabel(parallel: string): string {
+  const labels: Record<string, string> = {
+    platinum: 'PLATINUM 1/1',
+    obsidian: 'OBSIDIAN',
+    gold: 'GOLD',
+    chrome: 'CHROME',
+    holographic: 'HOLO',
+    base: 'BASE',
+  }
+  return labels[parallel.toLowerCase()] || 'BASE'
 }
 
 export function getAvailableEditions(card: { totalEditions: number; editionsSold: number }): number {

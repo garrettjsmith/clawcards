@@ -49,6 +49,21 @@
   }
 
   /* Rarity borders */
+  .card-mythic {
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow:
+      0 0 30px rgba(255, 77, 77, 0.4),
+      0 0 60px rgba(168, 85, 247, 0.2),
+      0 0 90px rgba(0, 229, 204, 0.1),
+      inset 0 0 30px rgba(255, 255, 255, 0.1);
+    animation: mythic-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes mythic-pulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(255, 77, 77, 0.4), 0 0 60px rgba(168, 85, 247, 0.2), 0 0 90px rgba(0, 229, 204, 0.1), inset 0 0 30px rgba(255, 255, 255, 0.1); }
+    50% { box-shadow: 0 0 40px rgba(255, 77, 77, 0.6), 0 0 80px rgba(168, 85, 247, 0.3), 0 0 120px rgba(0, 229, 204, 0.15), inset 0 0 40px rgba(255, 255, 255, 0.15); }
+  }
+
   .card-legendary {
     border-color: rgba(245, 158, 11, 0.5);
     box-shadow:
@@ -82,6 +97,59 @@
     box-shadow:
       0 0 20px rgba(107, 114, 128, 0.1),
       inset 0 0 20px rgba(107, 114, 128, 0.05);
+  }
+
+  /* Parallel effects */
+  .parallel-platinum {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.05));
+    border-color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .parallel-platinum::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+    animation: platinum-shine 3s ease-in-out infinite;
+  }
+
+  @keyframes platinum-shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .parallel-obsidian {
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.95), rgba(20, 20, 30, 0.9)) !important;
+    border-color: rgba(245, 158, 11, 0.8) !important;
+  }
+
+  .parallel-gold {
+    border-color: rgba(255, 215, 0, 0.7) !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 215, 0, 0.05) !important;
+  }
+
+  .parallel-chrome {
+    border-color: rgba(0, 229, 204, 0.6) !important;
+    background: linear-gradient(145deg, rgba(13, 19, 32, 0.9), rgba(0, 50, 50, 0.3)) !important;
+  }
+
+  .parallel-holographic::before {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 0, 0, 0.15) 0%,
+      rgba(255, 165, 0, 0.15) 16%,
+      rgba(255, 255, 0, 0.15) 33%,
+      rgba(0, 255, 0, 0.15) 50%,
+      rgba(0, 0, 255, 0.15) 66%,
+      rgba(75, 0, 130, 0.15) 83%,
+      rgba(238, 130, 238, 0.15) 100%
+    ) !important;
+    background-size: 400% 400%;
+    animation: rainbow-shift 4s ease infinite;
+  }
+
+  @keyframes rainbow-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   /* Holographic effect for legendary cards */
