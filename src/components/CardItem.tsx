@@ -1,6 +1,7 @@
 'use client'
 
 import { Card, parallelInfo } from '@/data/cards'
+import { CardArt } from './CardArt'
 import { cn, formatPrice, getRarityClass, getRarityColor, getAvailableEditions, getParallelClass, getParallelLabel } from '@/lib/utils'
 
 interface CardItemProps {
@@ -23,29 +24,6 @@ export function CardItem({ card, showBuyButton = true, size = 'md' }: CardItemPr
     sm: 'h-48',
     md: 'h-64',
     lg: 'h-80',
-  }
-
-  const getTypeIcon = (type: string) => {
-    const icons: Record<string, string> = {
-      founder: '👑',
-      character: '🤖',
-      moment: '⚡',
-      artifact: '🔧',
-      location: '🏛️',
-    }
-    return icons[type] || '🃏'
-  }
-
-  const getRarityGradient = (rarity: string) => {
-    const gradients: Record<string, string> = {
-      mythic: 'bg-gradient-to-br from-rarity-mythic/30 via-purple-500/20 to-cyan-500/10',
-      legendary: 'bg-gradient-to-br from-rarity-legendary/20 to-rarity-legendary/5',
-      epic: 'bg-gradient-to-br from-rarity-epic/20 to-rarity-epic/5',
-      rare: 'bg-gradient-to-br from-rarity-rare/20 to-rarity-rare/5',
-      uncommon: 'bg-gradient-to-br from-rarity-uncommon/20 to-rarity-uncommon/5',
-      common: 'bg-gradient-to-br from-rarity-common/20 to-rarity-common/5',
-    }
-    return gradients[rarity] || gradients.common
   }
 
   const getRarityBadgeBg = (rarity: string) => {
@@ -72,26 +50,15 @@ export function CardItem({ card, showBuyButton = true, size = 'md' }: CardItemPr
         <div className="holographic-overlay" />
       )}
 
-      {/* Card Image */}
-      <div className={cn('relative overflow-hidden bg-background-navy', imageSizes[size])}>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-deep/50 z-10" />
-
-        {/* Placeholder gradient for missing images */}
-        <div className={cn(
-          'absolute inset-0 flex items-center justify-center',
-          getRarityGradient(card.rarity)
-        )}>
-          <span className="text-6xl opacity-20">{getTypeIcon(card.type)}</span>
+      {/* Card Art */}
+      <div className={cn('relative overflow-hidden', imageSizes[size])}>
+        {/* SVG Card Art */}
+        <div className="absolute inset-0">
+          <CardArt card={card} />
         </div>
 
-        {/* Series Number - Top Left */}
-        {card.seriesNumber && (
-          <div className="absolute top-3 left-3 z-20">
-            <span className="edition-badge text-text-muted font-mono text-[10px]">
-              {card.seriesNumber}
-            </span>
-          </div>
-        )}
+        {/* Gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-deep/30 z-10 pointer-events-none" />
 
         {/* Rarity + Parallel badges - Top Right */}
         <div className="absolute top-3 right-3 z-20 flex flex-col gap-1 items-end">
@@ -149,7 +116,7 @@ export function CardItem({ card, showBuyButton = true, size = 'md' }: CardItemPr
             </p>
           )}
           <p className="text-text-dim text-[10px] uppercase tracking-wider mt-1">
-            {card.type} • {card.series.replace('-', ' ')}
+            {card.type} • {card.series.replace(/-/g, ' ')}
           </p>
         </div>
 
@@ -161,19 +128,19 @@ export function CardItem({ card, showBuyButton = true, size = 'md' }: CardItemPr
         {/* Attributes (if present) */}
         {card.attributes && size !== 'sm' && (
           <div className="flex gap-3 pt-1">
-            {card.attributes.power && (
+            {card.attributes.power !== undefined && (
               <div className="text-center">
                 <p className="text-accent-coral font-mono text-xs font-bold">{card.attributes.power}</p>
                 <p className="text-text-dim text-[9px] uppercase">PWR</p>
               </div>
             )}
-            {card.attributes.wisdom && (
+            {card.attributes.wisdom !== undefined && (
               <div className="text-center">
                 <p className="text-accent-cyan font-mono text-xs font-bold">{card.attributes.wisdom}</p>
                 <p className="text-text-dim text-[9px] uppercase">WIS</p>
               </div>
             )}
-            {card.attributes.influence && (
+            {card.attributes.influence !== undefined && (
               <div className="text-center">
                 <p className="text-rarity-epic font-mono text-xs font-bold">{card.attributes.influence}</p>
                 <p className="text-text-dim text-[9px] uppercase">INF</p>
