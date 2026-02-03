@@ -13,9 +13,9 @@ function SuccessContent({ searchParams }: { searchParams: { session_id?: string 
   const sessionId = searchParams.session_id
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 bg-background-deep">
       <div className="max-w-md w-full text-center">
-        <div className="card-frame p-8 md:p-12">
+        <div className="bg-background-card rounded-xl p-8 md:p-12 border border-white/10 relative z-10">
           {/* Success Icon */}
           <div className="w-20 h-20 rounded-full bg-accent-cyan/20 flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-accent-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,7 +29,7 @@ function SuccessContent({ searchParams }: { searchParams: { session_id?: string 
 
           <p className="text-text-muted mb-6">
             Congratulations! Your card has been added to your collection.
-            You'll receive a confirmation email shortly.
+            You&apos;ll receive a confirmation email shortly.
           </p>
 
           {/* Card Preview Placeholder */}
@@ -38,8 +38,11 @@ function SuccessContent({ searchParams }: { searchParams: { session_id?: string 
             <div className="absolute inset-0 bg-gradient-to-t from-background-deep/80 via-transparent to-transparent" />
           </div>
 
-          <div className="space-y-3">
-            <Link href="/cards" className="btn-primary w-full block">
+          <div className="space-y-4">
+            <Link
+              href="/cards"
+              className="block w-full px-6 py-3 bg-accent-coral hover:bg-accent-coral-dark text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent-coral/25"
+            >
               Browse More Cards
             </Link>
 
@@ -47,7 +50,7 @@ function SuccessContent({ searchParams }: { searchParams: { session_id?: string 
               href="https://moltbook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary w-full block"
+              className="block w-full px-6 py-3 border border-accent-coral/30 text-accent-coral hover:bg-accent-coral/10 font-semibold rounded-lg transition-all duration-200"
             >
               View on Moltbook
             </a>
@@ -56,13 +59,13 @@ function SuccessContent({ searchParams }: { searchParams: { session_id?: string 
               href="https://moltbay.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-ghost w-full block text-center"
+              className="block w-full px-4 py-2 text-text-muted hover:text-text-primary hover:bg-white/5 rounded-lg transition-all duration-200"
             >
               List on MoltBay
             </a>
           </div>
 
-          <p className="text-text-dim text-xs mt-6">
+          <p className="text-text-dim text-xs mt-8">
             Order confirmation has been sent to your email.
             {sessionId && (
               <span className="block mt-1 font-mono">
