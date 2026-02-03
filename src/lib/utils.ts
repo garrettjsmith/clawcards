@@ -49,3 +49,7 @@ export function getRarityBgColor(rarity: string): string {
   }
   return colors[rarity.toLowerCase()] || colors.common
 }
+
+export function getAvailableEditions(card: { totalEditions: number; editionsSold: number }): number {
+  return card.totalEditions - card.editionsSold
+}
