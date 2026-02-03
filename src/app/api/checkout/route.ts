@@ -38,7 +38,16 @@ export async function POST(request: NextRequest) {
     // Calculate the next edition number
     const nextEdition = card.editionsSold + 1
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    // Use request origin as fallback for base URL
+    const origin = request.headers.get('origin') || request.headers.get('referer')?.replace(/\/[^/]*$/, '') || ''
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || origin || 'https://clawcards.ai'
+
+    console.log('Creating checkout session:', {
+      cardId: card.id,
+      cardName: card.name,
+      price: card.priceInCents,
+      baseUrl,
+    })
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -48,18 +57,8 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: card.name,
-              description: `${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)} ${card.type} Card - Edition #${String(nextEdition).padStart(String(card.totalEditions).length, '0')}/${card.totalEditions}`,
-              images: card.imageUrl.startsWith('http')
-                ? [card.imageUrl]
-                : [`${baseUrl}${card.imageUrl}`],
-              metadata: {
-                card_id: card.id,
-                rarity: card.rarity,
-                type: card.type,
-                edition: nextEdition.toString(),
-                total_editions: card.totalEditions.toString(),
-              },
+              name: `${card.name} - ClawCard`,
+              description: `${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)} ${card.parallel !== 'base' ? card.parallel + ' ' : ''}${card.type} - Edition #${nextEdition}/${card.totalEditions}`,
             },
             unit_amount: card.priceInCents,
           },
@@ -75,11 +74,21 @@ export async function POST(request: NextRequest) {
         edition: nextEdition.toString(),
         total_editions: card.totalEditions.toString(),
         rarity: card.rarity,
+        parallel: card.parallel,
       },
     })
 
-    // Redirect to Stripe Checkout
-    return NextResponse.redirect(session.url!, { status: 303 })
+    console.log('Checkout session created:', session.id, session.url)
+
+    if (!session.url) {
+      return NextResponse.json(
+        { error: 'Failed to create checkout session' },
+        { status: 500 }
+      )
+    }
+
+    // Return URL for client-side redirect
+    return NextResponse.json({ url: session.url })
   } catch (error) {
     console.error('Checkout error:', error)
 

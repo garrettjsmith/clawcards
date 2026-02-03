@@ -46,18 +46,17 @@ export default function CardDetailPage() {
         body: formData,
       })
 
-      if (response.redirected) {
-        window.location.href = response.url
-      } else {
-        const data = await response.json()
-        if (data.error) {
-          alert(data.error)
-        }
+      const data = await response.json()
+
+      if (data.url) {
+        window.location.href = data.url
+      } else if (data.error) {
+        alert(data.error)
+        setIsLoading(false)
       }
     } catch (error) {
       console.error('Checkout error:', error)
       alert('Failed to initiate checkout. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
