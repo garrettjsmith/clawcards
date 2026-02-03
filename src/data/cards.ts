@@ -3,8 +3,8 @@
 // =============================================================================
 
 export type CardRarity = 'mythic' | 'legendary' | 'epic' | 'rare' | 'uncommon' | 'common'
-export type CardType = 'founder' | 'character' | 'moment' | 'artifact' | 'location'
-export type CardSeries = 'genesis' | 'founders' | 'moltbot-origins' | 'historic-firsts' | 'artifacts'
+export type CardType = 'founder' | 'pioneer' | 'character' | 'moment' | 'artifact' | 'location'
+export type CardSeries = 'genesis' | 'founders' | 'pioneers' | 'moltbot-origins' | 'historic-firsts' | 'artifacts'
 export type CardParallel = 'base' | 'holographic' | 'chrome' | 'gold' | 'obsidian' | 'platinum'
 
 export interface Card {
@@ -34,6 +34,13 @@ export interface Card {
     influence?: number
     rarity_score?: number
   }
+  // Pioneer/GitHub specific
+  github?: {
+    username: string
+    avatarUrl: string
+    commits: number
+    rank: number
+  }
 }
 
 // =============================================================================
@@ -48,8 +55,13 @@ export const seriesInfo: Record<CardSeries, { name: string; description: string;
   },
   'founders': {
     name: 'Founders Series',
-    description: 'Celebrating the pioneers who built the OpenClaw ecosystem.',
+    description: 'Celebrating the visionaries who conceived the OpenClaw ecosystem.',
     icon: '👑',
+  },
+  'pioneers': {
+    name: 'Pioneers Series',
+    description: 'The GitHub contributors who built OpenClaw with their code. Real devs. Real commits. Real legends.',
+    icon: '🦞',
   },
   'moltbot-origins': {
     name: 'MoltBot Origins',
@@ -773,6 +785,600 @@ export const cards: Card[] = [
     imageUrl: '/cards/moltcore.png',
     creator: 'OpenClaw Studios',
     releaseDate: '2024-02-01',
+  },
+
+  // ===========================================================================
+  // PIONEERS SERIES - The GitHub Contributors Who Built OpenClaw
+  // ===========================================================================
+
+  // #1 - steipete - THE GOAT - 6,986 commits
+  {
+    id: 'pioneer-steipete-platinum',
+    name: '@steipete',
+    subtitle: 'The GOAT',
+    description: '6,986 commits. Not a typo. steipete didn\'t just contribute to OpenClaw—he IS OpenClaw. When others wrote docs, he wrote history. The undisputed #1.',
+    rarity: 'mythic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-001',
+    parallel: 'platinum',
+    priceInCents: 149999, // $1,499.99
+    totalEditions: 1,
+    editionsSold: 0,
+    imageUrl: '/cards/pioneers/steipete.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    featured: true,
+    isNewDrop: true,
+    github: {
+      username: 'steipete',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/58493?v=4',
+      commits: 6986,
+      rank: 1,
+    },
+    attributes: {
+      power: 100,
+      wisdom: 100,
+      influence: 100,
+      rarity_score: 1000,
+    },
+  },
+  {
+    id: 'pioneer-steipete-obsidian',
+    name: '@steipete',
+    subtitle: 'The GOAT',
+    description: '6,986 commits. Not a typo. steipete didn\'t just contribute to OpenClaw—he IS OpenClaw. When others wrote docs, he wrote history.',
+    rarity: 'legendary',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-001',
+    parallel: 'obsidian',
+    priceInCents: 49999, // $499.99
+    totalEditions: 10,
+    editionsSold: 2,
+    imageUrl: '/cards/pioneers/steipete.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    featured: true,
+    isNewDrop: true,
+    github: {
+      username: 'steipete',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/58493?v=4',
+      commits: 6986,
+      rank: 1,
+    },
+  },
+  {
+    id: 'pioneer-steipete-gold',
+    name: '@steipete',
+    subtitle: 'The GOAT',
+    description: '6,986 commits. The undisputed #1 contributor to OpenClaw.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-001',
+    parallel: 'gold',
+    priceInCents: 19999, // $199.99
+    totalEditions: 25,
+    editionsSold: 7,
+    imageUrl: '/cards/pioneers/steipete.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'steipete',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/58493?v=4',
+      commits: 6986,
+      rank: 1,
+    },
+  },
+
+  // #2 - thewilloftheshadow - 173 commits
+  {
+    id: 'pioneer-thewilloftheshadow-gold',
+    name: '@thewilloftheshadow',
+    subtitle: 'Shadow Commander',
+    description: '173 commits from the shadows. thewilloftheshadow moves in silence but their code speaks volumes. A true ninja of the codebase.',
+    rarity: 'legendary',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-002',
+    parallel: 'gold',
+    priceInCents: 14999, // $149.99
+    totalEditions: 25,
+    editionsSold: 3,
+    imageUrl: '/cards/pioneers/thewilloftheshadow.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    featured: true,
+    isNewDrop: true,
+    github: {
+      username: 'thewilloftheshadow',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/35580099?v=4',
+      commits: 173,
+      rank: 2,
+    },
+    attributes: {
+      power: 85,
+      wisdom: 90,
+      influence: 88,
+      rarity_score: 870,
+    },
+  },
+  {
+    id: 'pioneer-thewilloftheshadow-chrome',
+    name: '@thewilloftheshadow',
+    subtitle: 'Shadow Commander',
+    description: '173 commits from the shadows. A ninja of the codebase.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-002',
+    parallel: 'chrome',
+    priceInCents: 5999, // $59.99
+    totalEditions: 100,
+    editionsSold: 18,
+    imageUrl: '/cards/pioneers/thewilloftheshadow.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'thewilloftheshadow',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/35580099?v=4',
+      commits: 173,
+      rank: 2,
+    },
+  },
+
+  // #3 - vignesh07 - 83 commits
+  {
+    id: 'pioneer-vignesh07-gold',
+    name: '@vignesh07',
+    subtitle: 'Code Architect',
+    description: '83 commits of pure craftsmanship. vignesh07 builds foundations that last. Clean code, clean vibes.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-003',
+    parallel: 'gold',
+    priceInCents: 9999, // $99.99
+    totalEditions: 25,
+    editionsSold: 4,
+    imageUrl: '/cards/pioneers/vignesh07.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'vignesh07',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/1436853?v=4',
+      commits: 83,
+      rank: 3,
+    },
+    attributes: {
+      power: 78,
+      wisdom: 85,
+      influence: 75,
+      rarity_score: 800,
+    },
+  },
+  {
+    id: 'pioneer-vignesh07-chrome',
+    name: '@vignesh07',
+    subtitle: 'Code Architect',
+    description: '83 commits of pure craftsmanship.',
+    rarity: 'rare',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-003',
+    parallel: 'chrome',
+    priceInCents: 3999, // $39.99
+    totalEditions: 100,
+    editionsSold: 22,
+    imageUrl: '/cards/pioneers/vignesh07.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'vignesh07',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/1436853?v=4',
+      commits: 83,
+      rank: 3,
+    },
+  },
+
+  // #4 - tyler6204 - 59 commits
+  {
+    id: 'pioneer-tyler6204-chrome',
+    name: '@tyler6204',
+    subtitle: 'Early Adopter',
+    description: '59 commits when it counted most. tyler6204 was there before it was cool. OG energy.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-004',
+    parallel: 'chrome',
+    priceInCents: 4999, // $49.99
+    totalEditions: 100,
+    editionsSold: 15,
+    imageUrl: '/cards/pioneers/tyler6204.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'tyler6204',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/64381258?v=4',
+      commits: 59,
+      rank: 4,
+    },
+    attributes: {
+      power: 72,
+      wisdom: 78,
+      influence: 70,
+      rarity_score: 750,
+    },
+  },
+
+  // #5 - cpojer - 56 commits
+  {
+    id: 'pioneer-cpojer-chrome',
+    name: '@cpojer',
+    subtitle: 'Jest Legend',
+    description: '56 commits from cpojer—yes, THAT cpojer. When a JavaScript legend touches your codebase, you frame that commit.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-005',
+    parallel: 'chrome',
+    priceInCents: 7999, // $79.99
+    totalEditions: 100,
+    editionsSold: 28,
+    imageUrl: '/cards/pioneers/cpojer.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    featured: true,
+    isNewDrop: true,
+    github: {
+      username: 'cpojer',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/13352?v=4',
+      commits: 56,
+      rank: 5,
+    },
+    attributes: {
+      power: 88,
+      wisdom: 95,
+      influence: 92,
+      rarity_score: 900,
+    },
+  },
+
+  // #6 - obviyus - 56 commits
+  {
+    id: 'pioneer-obviyus-chrome',
+    name: '@obviyus',
+    subtitle: 'The Obvious Choice',
+    description: '56 commits of clarity. obviyus makes complex things simple and simple things elegant.',
+    rarity: 'epic',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-006',
+    parallel: 'chrome',
+    priceInCents: 4999, // $49.99
+    totalEditions: 100,
+    editionsSold: 19,
+    imageUrl: '/cards/pioneers/obviyus.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'obviyus',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/22031114?v=4',
+      commits: 56,
+      rank: 6,
+    },
+    attributes: {
+      power: 70,
+      wisdom: 82,
+      influence: 68,
+      rarity_score: 740,
+    },
+  },
+
+  // #7 - joshp123 - 49 commits
+  {
+    id: 'pioneer-joshp123-holo',
+    name: '@joshp123',
+    subtitle: 'Steady Hand',
+    description: '49 commits of consistency. joshp123 ships when others sleep.',
+    rarity: 'rare',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-007',
+    parallel: 'holographic',
+    priceInCents: 2999, // $29.99
+    totalEditions: 250,
+    editionsSold: 67,
+    imageUrl: '/cards/pioneers/joshp123.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'joshp123',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/1497361?v=4',
+      commits: 49,
+      rank: 7,
+    },
+  },
+
+  // #8 - gumadeiras - 46 commits
+  {
+    id: 'pioneer-gumadeiras-holo',
+    name: '@gumadeiras',
+    subtitle: 'Rising Star',
+    description: '46 commits and climbing. gumadeiras brings fresh energy to every PR.',
+    rarity: 'rare',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-008',
+    parallel: 'holographic',
+    priceInCents: 2499, // $24.99
+    totalEditions: 250,
+    editionsSold: 58,
+    imageUrl: '/cards/pioneers/gumadeiras.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'gumadeiras',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/5599352?v=4',
+      commits: 46,
+      rank: 8,
+    },
+  },
+
+  // #9 - shakkernerd - 44 commits
+  {
+    id: 'pioneer-shakkernerd-holo',
+    name: '@shakkernerd',
+    subtitle: 'Shake Things Up',
+    description: '44 commits that shake the foundation. shakkernerd doesn\'t do boring code.',
+    rarity: 'rare',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-009',
+    parallel: 'holographic',
+    priceInCents: 2499, // $24.99
+    totalEditions: 250,
+    editionsSold: 71,
+    imageUrl: '/cards/pioneers/shakkernerd.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'shakkernerd',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/165377636?v=4',
+      commits: 44,
+      rank: 9,
+    },
+  },
+
+  // #10 - onutc - 37 commits
+  {
+    id: 'pioneer-onutc-holo',
+    name: '@onutc',
+    subtitle: 'Quiet Force',
+    description: '37 commits of understated excellence. onutc lets the code do the talking.',
+    rarity: 'rare',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-010',
+    parallel: 'holographic',
+    priceInCents: 1999, // $19.99
+    totalEditions: 250,
+    editionsSold: 45,
+    imageUrl: '/cards/pioneers/onutc.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'onutc',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/152018508?v=4',
+      commits: 37,
+      rank: 10,
+    },
+  },
+
+  // More contributors as base cards (20+ commits = uncommon)
+  {
+    id: 'pioneer-mukhtharcm-base',
+    name: '@mukhtharcm',
+    subtitle: 'Contributor',
+    description: '32 commits. Every line counts.',
+    rarity: 'uncommon',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-011',
+    parallel: 'base',
+    priceInCents: 999, // $9.99
+    totalEditions: 500,
+    editionsSold: 123,
+    imageUrl: '/cards/pioneers/mukhtharcm.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'mukhtharcm',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/56378562?v=4',
+      commits: 32,
+      rank: 11,
+    },
+  },
+  {
+    id: 'pioneer-lc0rp-base',
+    name: '@lc0rp',
+    subtitle: 'Contributor',
+    description: '25 commits. Building blocks of greatness.',
+    rarity: 'uncommon',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-012',
+    parallel: 'base',
+    priceInCents: 999, // $9.99
+    totalEditions: 500,
+    editionsSold: 98,
+    imageUrl: '/cards/pioneers/lc0rp.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'lc0rp',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/2609441?v=4',
+      commits: 25,
+      rank: 12,
+    },
+  },
+  {
+    id: 'pioneer-sebslight-base',
+    name: '@sebslight',
+    subtitle: 'Contributor',
+    description: '23 commits. Shedding light on dark corners of the codebase.',
+    rarity: 'uncommon',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-013',
+    parallel: 'base',
+    priceInCents: 999, // $9.99
+    totalEditions: 500,
+    editionsSold: 87,
+    imageUrl: '/cards/pioneers/sebslight.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'sebslight',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/19554889?v=4',
+      commits: 23,
+      rank: 13,
+    },
+  },
+  {
+    id: 'pioneer-mcinteerj-base',
+    name: '@mcinteerj',
+    subtitle: 'Contributor',
+    description: '21 commits. Integrity in every push.',
+    rarity: 'uncommon',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-014',
+    parallel: 'base',
+    priceInCents: 999, // $9.99
+    totalEditions: 500,
+    editionsSold: 76,
+    imageUrl: '/cards/pioneers/mcinteerj.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'mcinteerj',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/3613653?v=4',
+      commits: 21,
+      rank: 14,
+    },
+  },
+  {
+    id: 'pioneer-badlogic-base',
+    name: '@badlogic',
+    subtitle: 'Logic Master',
+    description: '18 commits. Don\'t let the name fool you—badlogic writes pristine code.',
+    rarity: 'uncommon',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-015',
+    parallel: 'base',
+    priceInCents: 799, // $7.99
+    totalEditions: 500,
+    editionsSold: 112,
+    imageUrl: '/cards/pioneers/badlogic.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'badlogic',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/514052?v=4',
+      commits: 18,
+      rank: 15,
+    },
+  },
+  {
+    id: 'pioneer-conroywhitney-base',
+    name: '@conroywhitney',
+    subtitle: 'Contributor',
+    description: '16 commits. Quality over quantity.',
+    rarity: 'common',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-016',
+    parallel: 'base',
+    priceInCents: 499, // $4.99
+    totalEditions: 1000,
+    editionsSold: 234,
+    imageUrl: '/cards/pioneers/conroywhitney.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'conroywhitney',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/249891?v=4',
+      commits: 16,
+      rank: 16,
+    },
+  },
+  {
+    id: 'pioneer-dlauer-base',
+    name: '@dlauer',
+    subtitle: 'Contributor',
+    description: '14 commits. Every commit tells a story.',
+    rarity: 'common',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-017',
+    parallel: 'base',
+    priceInCents: 499, // $4.99
+    totalEditions: 1000,
+    editionsSold: 189,
+    imageUrl: '/cards/pioneers/dlauer.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'dlauer',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/757041?v=4',
+      commits: 14,
+      rank: 17,
+    },
+  },
+  {
+    id: 'pioneer-bjesuiter-base',
+    name: '@bjesuiter',
+    subtitle: 'Contributor',
+    description: '13 commits. The B stands for Based.',
+    rarity: 'common',
+    type: 'pioneer',
+    series: 'pioneers',
+    seriesNumber: 'PIO-018',
+    parallel: 'base',
+    priceInCents: 499, // $4.99
+    totalEditions: 1000,
+    editionsSold: 156,
+    imageUrl: '/cards/pioneers/bjesuiter.png',
+    creator: 'OpenClaw Community',
+    releaseDate: '2024-02-01',
+    isNewDrop: true,
+    github: {
+      username: 'bjesuiter',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/2365676?v=4',
+      commits: 13,
+      rank: 18,
+    },
   },
 ]
 
