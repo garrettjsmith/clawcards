@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background-deep: #050810;
+    --background-navy: #0a0f1a;
+    --accent-coral: #ff4d4d;
+    --accent-cyan: #00e5cc;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background-deep text-text-primary;
+    background-image:
+      radial-gradient(ellipse at top, rgba(255, 77, 77, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(0, 229, 204, 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-accent-coral/30 text-white;
+  }
+}
+
+@layer components {
+  /* Card frame styles - Topps inspired */
+  .card-frame {
+    @apply relative rounded-xl overflow-hidden;
+    background: linear-gradient(145deg, rgba(13, 19, 32, 0.9), rgba(5, 8, 16, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .card-frame::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Rarity borders */
+  .card-legendary {
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow:
+      0 0 20px rgba(245, 158, 11, 0.2),
+      inset 0 0 20px rgba(245, 158, 11, 0.05);
+  }
+
+  .card-epic {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow:
+      0 0 20px rgba(168, 85, 247, 0.2),
+      inset 0 0 20px rgba(168, 85, 247, 0.05);
+  }
+
+  .card-rare {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow:
+      0 0 20px rgba(59, 130, 246, 0.2),
+      inset 0 0 20px rgba(59, 130, 246, 0.05);
+  }
+
+  .card-uncommon {
+    border-color: rgba(34, 197, 94, 0.5);
+    box-shadow:
+      0 0 20px rgba(34, 197, 94, 0.2),
+      inset 0 0 20px rgba(34, 197, 94, 0.05);
+  }
+
+  .card-common {
+    border-color: rgba(107, 114, 128, 0.5);
+    box-shadow:
+      0 0 20px rgba(107, 114, 128, 0.1),
+      inset 0 0 20px rgba(107, 114, 128, 0.05);
+  }
+
+  /* Holographic effect for legendary cards */
+  .holographic-overlay {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 77, 77, 0.1) 0%,
+      rgba(168, 85, 247, 0.1) 25%,
+      rgba(59, 130, 246, 0.1) 50%,
+      rgba(34, 197, 94, 0.1) 75%,
+      rgba(245, 158, 11, 0.1) 100%
+    );
+    background-size: 200% 200%;
+    animation: holographic 3s ease infinite;
+    mix-blend-mode: overlay;
+  }
+
+  .card-frame:hover .holographic-overlay {
+    @apply opacity-100;
+  }
+
+  @keyframes holographic {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-accent-coral hover:bg-accent-coral-dark text-white font-display font-semibold rounded-lg transition-all duration-200;
+    @apply hover:shadow-lg hover:shadow-accent-coral/25 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 border border-accent-coral/30 text-accent-coral hover:bg-accent-coral/10 font-display font-semibold rounded-lg transition-all duration-200;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-text-muted hover:text-text-primary hover:bg-white/5 rounded-lg transition-all duration-200;
+  }
+
+  /* Edition badge - Topps style */
+  .edition-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Activity feed item */
+  .activity-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200;
+    background: rgba(13, 19, 32, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .activity-item:hover {
+    background: rgba(13, 19, 32, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #ff4d4d, #00e5cc);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #f59e0b, #fbbf24);
+  }
+
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(var(--background-deep), var(--background-deep)) padding-box,
+                linear-gradient(135deg, rgba(255, 77, 77, 0.3), rgba(0, 229, 204, 0.3)) border-box;
+  }
+}
